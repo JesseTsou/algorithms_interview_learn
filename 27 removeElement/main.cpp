@@ -22,6 +22,21 @@ public:
         }
         return k;
     }
+    /*
+     * 遍历数组，如果是目标值，则从数组最后的值替换到该位置，直到不为目标值
+     * 如果不是目标值，则跳过
+     */
+    int removeElement2(vector<int>& nums, int val) {
+        int size = nums.size();
+        for (int i = 0; i < size; )
+        {
+            if (nums[i] == val)
+                nums[i] = nums[--size];
+            else
+                i ++;
+        }
+        return size;
+    }
 };
 int print(vector<int> vec, int size)
 {
@@ -35,7 +50,7 @@ int main() {
     vector<int> vecnums(a, a + sizeof(a)/sizeof(a[0]));
     print(vecnums, vecnums.size());
     Solution s;
-    int len = s.removeElement(vecnums, 7);
+    int len = s.removeElement2(vecnums, 7);
     print(vecnums, len);
 
     return 0;
