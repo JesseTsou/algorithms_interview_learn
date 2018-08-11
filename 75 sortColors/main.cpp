@@ -44,16 +44,37 @@ public:
             }
     }
 
+    /*
+     * 时间复杂度：O(n)
+     * 一次循环
+     * [0,zero)存储0
+     * （two,size-1]存储2
+     * [zero,two]存储1
+     * 注意变量定义范围
+     */
     void sortColors2(vector<int>& nums) {
+        int zero = 0;
+        int two = nums.size() - 1;
+        for (int i = 0; i <= two; )
+        { ;
+            if (nums[i] == 0)
+            {
+                swap(nums[zero++], nums[i++]);
+            } else if (nums[i] == 2){
+                swap(nums[two--],nums[i]);
+            } else if (nums[i] == 1)
+                i ++;
+        }
     }
 };
 
 int main() {
-    int a[]= {1,2,0,0,2,1,2,0,1};
+    //int a[]= {1,2,0,0,2,1,2,0,1};
+    int a[]= {2,0,1};
     vector <int> vec (a, a + sizeof(a)/sizeof(a[0]));
     print(vec);
     Solution s;
-    s.sortColors(vec);
+    s.sortColors2(vec);
     print(vec);
     return 0;
 }
