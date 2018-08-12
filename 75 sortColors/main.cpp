@@ -43,7 +43,22 @@ public:
                 nums[i] = 2;
             }
     }
-
+    /*
+     * 修改上述方法，用数组来存储个数
+     */
+    void sortColors2(vector<int>& nums) {
+        int record[3] = {0};
+        for (int i = 0; i < nums.size(); i++)
+        {
+            record[nums[i]] ++;
+        }
+        int k = 0;
+        for (int i = 0; i < 3; i ++) {
+            for (int j = 0; j < record[i]; j++) {
+                nums[k++] = i;
+            }
+        }
+    }
     /*
      * 时间复杂度：O(n)
      * 一次循环
@@ -52,7 +67,7 @@ public:
      * [zero,two]存储1
      * 注意变量定义范围
      */
-    void sortColors2(vector<int>& nums) {
+    void sortColors3(vector<int>& nums) {
         int zero = 0;
         int two = nums.size() - 1;
         for (int i = 0; i <= two; )
