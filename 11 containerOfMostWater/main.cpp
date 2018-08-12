@@ -50,6 +50,7 @@ public:
         int r = height.size() - 1;
         while (l < r)
         {
+            //计算面积，取较低的一边
             h =(height[l] <= height[r] ? height[l] : height[r]);
             ret = (r - l) * h;
             if (maxA < ret){
