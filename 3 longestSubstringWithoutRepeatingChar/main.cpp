@@ -21,7 +21,6 @@ public:
         int l = 0, r = -1;//[l,r]为子串
         int len = 0;
         int max = 0;
-
         while (r + 1 < s.size())
         {
             if(szchar[s[r + 1]] == 0)
@@ -34,6 +33,28 @@ public:
                 len --;
                 l ++;
             }
+        }
+
+        return max;
+    }
+    /*
+     * 更简洁的写法
+     */
+    int lengthOfLongestSubstrin2(string s) {
+        char szchar[256] = {0};
+        int l = 0, r = -1;//[l,r]为子串
+        int max = 0;
+
+        while (r + 1 < s.size())
+        {
+            if(szchar[s[r + 1]] == 0)
+            {
+                szchar[s[++r]] ++;
+            }else{
+                szchar[s[l++]] --;
+            }
+
+            max = (max > r - l + 1?max:r - l + 1);
         }
         return max;
     }
