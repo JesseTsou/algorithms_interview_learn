@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstring>
 using namespace std;
 /*
  * 给定一个字符串，找出不含有重复字符的最长子串的长度。
@@ -58,13 +59,35 @@ public:
         }
         return max;
     }
+    /*
+     *设置数组记录右值点的位置，可使左边界快速跳跃到重复点右侧
+     */
+    int lengthOfLongestSubstring3(string s) {
+        int szchar[256] = {0};
+        int l = 0, r = -1;//[l,r]为子串
+        int max = 0;
+        memset(szchar, -1,sizeof(szchar));
+        while (r + 1 < s.size())
+        {
+            r ++;
+            if(szchar[s[r]] != -1)
+            {
+                l = (l > szchar[s[r]] + 1?l:szchar[s[r]]+1);
+            }
+
+            szchar[s[r]] = r;//记录位置
+
+            max = (max > r - l + 1?max:r - l + 1);
+        }
+        return max;
+    }
 };
 
 int main() {
-    string str="abcabcbb";
+    string str=" ";
     print(str);
     Solution s;
-    int len = s.lengthOfLongestSubstring(str);
+    int len = s.lengthOfLongestSubstring3(str);
     cout << len << endl;
     return 0;
 }
