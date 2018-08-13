@@ -30,10 +30,7 @@ public:
                 len ++;
                 max = (max > len?max:len);
             }else{
-                if(szchar[s[l]] == szchar[s[r + 1]])
-                {
-                    szchar[s[l]] --;
-                }
+                szchar[s[l]] --;
                 len --;
                 l ++;
             }
