@@ -38,6 +38,30 @@ public:
             count = 0;
         return count;
     }
+    /*
+     * 时间复杂度：O(n^2)
+     * 两次遍历
+     */
+    int minSubArrayLen2(int s, vector<int>& nums) {
+        int len = nums.size() + 1;
+        int sum = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            sum = 0;
+            for (int j = i; j < nums.size(); j ++)
+            {
+                sum += nums[j];
+                if (sum >= s){
+                    int tmplen = j - i + 1;
+                    len = (len < tmplen?len:tmplen);
+                    break;
+                }
+            }
+        }
+        if (len == nums.size() + 1)
+            len = 0;
+        return len;
+    }
 };
 
 int main() {
@@ -45,7 +69,7 @@ int main() {
     vector<int> vec(a, a + sizeof(a)/sizeof(a[0]));
     print(vec);
     Solution s;
-    int len = s.minSubArrayLen(7,vec);
+    int len = s.minSubArrayLen2(7,vec);
     cout << len << endl;
     return 0;
 }
