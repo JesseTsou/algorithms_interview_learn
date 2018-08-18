@@ -5,6 +5,11 @@
 
 using namespace std;
 
+/*
+ *给定两个数组，编写一个函数来计算它们的交集。
+ */
+
+
 int print(vector<int> vec)
 {
     for(int e:vec)
