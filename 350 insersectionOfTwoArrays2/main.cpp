@@ -1,8 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 #include <map>
-
+#include <set>
 using namespace std;
 
 int print(vector<int> vec)
@@ -51,6 +52,45 @@ public:
             }
         return ret;
     }
+
+    /*
+     * 使用multiset，可重复集合
+     * 时间复杂度：O(nlogn)
+     */
+    vector<int> intersect3(vector<int>& nums1, vector<int>& nums2) {
+        multiset<int> set1(nums1.begin(), nums1.end());
+
+        vector<int> ret;
+        for (int e:nums2){
+            //使用遍历器进行查找，如果直接查找，可能会删除多个相等的元素
+            multiset<int>::iterator iter = set1.find(e);
+            if (iter != set1.end()){
+                ret.push_back(e);
+                set1.erase(iter);
+            }
+
+        }
+        return ret;
+    }
+    /*
+     * unordered_multiset，可重复集合
+     * 时间复杂度：O(n)
+     */
+    vector<int> intersect4(vector<int>& nums1, vector<int>& nums2) {
+        unordered_multiset<int> set1(nums1.begin(), nums1.end());
+
+        vector<int> ret;
+        for (int e:nums2){
+            //使用遍历器进行查找，如果直接查找，可能会删除多个相等的元素
+            unordered_multiset<int>::iterator iter = set1.find(e);
+            if (iter != set1.end()){
+                ret.push_back(e);
+                set1.erase(iter);
+            }
+
+        }
+        return ret;
+    }
 };
 
 int main() {
@@ -63,7 +103,7 @@ int main() {
     print(vec2);
 
     Solution s;
-    print(s.intersect2(vec1,vec2));
+    print(s.intersect4(vec1,vec2));
 
     return 0;
 }
