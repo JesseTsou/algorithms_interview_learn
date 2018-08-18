@@ -70,10 +70,57 @@ public:
         }
         return ret;
     }
+
+    /*
+     * 如果输入的数组均为有序数组
+     * 时间复杂度：O(nlogn)
+     * 使用了二分查找进行数据的查找
+     */
+    bool binary_find(vector<int> vec, int tar)
+    {
+        bool isfind = false;
+        int left = vec[0];
+        int right = vec[vec.size() - 1];
+        while (left <= right){
+            int mid = (left + right)/2;
+            if (vec[mid] > tar){
+                right = mid - 1;
+            }else if (vec[mid] < tar){
+                left = mid + 1;
+            }
+            else{
+                isfind =  true;
+                break;
+            }
+        }
+        return isfind;
+    }
+    bool isexist(vector<int> vec, int tar)
+    {
+        bool isexist = false;
+        for (int e:vec) {
+            if (e == tar) {
+                isexist = true;
+                break;
+            }
+        }
+        return isexist;
+    }
+    vector<int> intersection4(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> ret;
+        for (int e:nums1){
+            if (binary_find(nums2,e)){
+                if (!isexist(ret, e))
+                    ret.push_back(e);
+            }
+        }
+
+        return ret;
+    }
 };
 
 int main() {
-    int nums1[] = {3,4,5,6,7};
+    int nums1[] = {3,4,5,5,6,7};
     int nums2[] = {1,2,3,3,5,6,7,8};
     vector<int> vec1(nums1, nums1+sizeof(nums1)/sizeof(nums1[0]));
     vector<int> vec2(nums2, nums2+sizeof(nums2)/sizeof(nums2[0]));
@@ -82,7 +129,7 @@ int main() {
     print(vec2);
 
     Solution s;
-    print(s.intersection3(vec1,vec2));
+    print(s.intersection4(vec1,vec2));
 
     return 0;
 }
