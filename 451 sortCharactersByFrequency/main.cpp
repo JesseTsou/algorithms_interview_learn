@@ -44,7 +44,7 @@ public:
         sort(vec.begin(),vec.end(),[](const pair<char,int> &a, const pair<char,int> &b)
         {
             return a.second >= b.second;
-        });
+        });//使用了匿名函数,比较second，降序排列
 
         string res;
         for (auto i:vec)
