@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include<sstream>
 using  namespace std;
 
 /*
@@ -68,11 +69,38 @@ public:
         return true;
     }
     /*
+     * 两个对应map的优化
+     * 修改读取以空格分隔字符的方法
+     */
+    bool wordPattern2(string pattern, string str) {
+        istringstream in(str);//用于执行C++风格的串流的输入操作,从string对象str中读取字符
+        vector<string> vec;
+        string s;
+        while(in >> s)
+            vec.push_back(s);
+        if (pattern.size() != vec.size()){
+            return false;
+        }
+        unordered_map<char,string> map1;//pattern->str
+        unordered_map<string,char> map2;//str->pattern
+        for (int i = 0; i < pattern.size(); i ++)
+        {
+            if(map1[pattern[i]] == "" && map2[vec[i]] == 0){//均为新元素时，添加
+                map1[pattern[i]] = vec[i];
+                map2[vec[i]] = pattern[i];
+            } else{
+                if (map1[pattern[i]] != vec[i])
+                    return false;
+            }
+        }
+        return true;
+    }
+    /*
      * 时间复杂度：O(nlogn)
      * 三个map，前两个保存出现的次数，第三个保存对应关系
      *
      */
-    bool wordPattern2(string pattern, string str) {
+    bool wordPattern3(string pattern, string str) {
         unordered_map<char,int> map1;//字母及出现的次数
         unordered_map<string,int> map2;//单词及出现的次数
         unordered_map<char,string> map3;//对应关系
@@ -100,14 +128,15 @@ public:
 
         return true;
     }
+
 };
 
 int main() {
     string str1 = "abba";
-    string str2 = "dog zou zou dog";
+    string str2 = "abba";
 
     Solution s;
-    if (s.wordPattern2(str1, str2)){
+    if (s.wordPattern3(str1, str2)){
         cout << "is match" << endl;
     }else{
         cout << "is not match" << endl;
