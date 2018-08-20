@@ -105,6 +105,44 @@ public:
 
         return res;
     }
+    /*
+     * 时间复杂度：O(n^2)
+     * 最外层遍历
+     * 内层采用对撞指针的方法，进行遍历
+     */
+    vector<vector<int>> threeSum3(vector<int>& nums) {
+        vector<vector<int>>  res;
+        if(nums.empty() || nums.size() < 3)
+            return res;
+        sort(nums.begin(),nums.end());
+        for (int i = 0; i < nums.size() - 2; i ++)
+        {
+            int tar = 0 - nums[i];
+            /*
+             * 以下为获取两个数和为tar
+             * 对撞指针，向中间移动
+             */
+            int j = i + 1,k = nums.size() - 1;
+            while (j < k)
+            {
+                if (nums[j] + nums[k] == tar){//若和等于tar时，则可保存数据
+                    res.push_back({nums[i],nums[j ++],nums[k --]});
+                    while(j < k && nums[j] == nums[j - 1])//  若有相等的，则向右移动
+                        j ++;
+                    while(j < k && nums[k] == nums[k + 1])//  若有相等的，则向左移动
+                        k --;
+                }else if (nums[j] + nums[k] > tar){//若和大于tar，则需要较大值减小，右边界向左移动
+                    k --;
+                }else{//若和小于tar，则需要较小值增大，左边界向右移动
+                    j ++;
+                }
+            }
+            //保证下一个为不重复的数据
+            while (i < nums.size() - 2 && nums[i] == nums[i + 1])
+                i ++;
+        }
+        return res;
+    }
 };
 
 int main() {
@@ -114,7 +152,7 @@ int main() {
     vector<int>  vec (nums, nums + sizeof(nums)/sizeof(nums[0]));
 
     Solution s;
-    vector<vector<int>> ret = s.threeSum2(vec);
+    vector<vector<int>> ret = s.threeSum3(vec);
     print(ret);
 
     return 0;
