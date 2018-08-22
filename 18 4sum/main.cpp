@@ -80,18 +80,27 @@ public:
 
         for (int i = 0; i < nums.size() - 3; i ++)
         {
-            //若当前值与最后三个最大值和仍小于target，则本轮不需要继续遍历了
+            /*
+             * 若当前值与最后三个最大值和仍小于target，则本轮不需要继续遍历了
+             */
             if(nums[i] + nums[nums.size() - 1] + nums[nums.size() - 2] + nums[nums.size() - 3] < target)
                 continue;
-            //若前四个最小值之和已经大于target了，则以后就不可能继续更小了，不需要继续遍历了
+            /*
+             * 若前四个最小值之和已经大于target了，则以后就不可能继续更小了，不需要继续遍历了
+             */
             if(nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target)
                 return res;
             for (int j = i + 1; j < nums.size() - 2; j ++)
             {
-                //若前两个值与最后两个最大值的和仍小于target，则本轮不需要继续遍历了
+                /*
+                 * 若前两个值与最后两个最大值的和仍小于target，则本轮不需要继续遍历了
+                 */
                 if(nums[i] + nums[j] + nums[nums.size() - 1] + nums[nums.size() - 2] < target)
                     continue;
-                //若第一个值与第二层本轮循环前三个最小值之和已经大于target了，则本轮循环以后就不可能继续更小了，则本轮循环不需要继续遍历了
+                /*
+                 * 若第一个值与第二层本轮循环前三个最小值之和已经大于target了，
+                 * 则本轮循环以后就不可能继续更小了，则本轮循环不需要继续遍历了
+                 */
                 if(nums[i] + nums[j] + nums[j + 1] + nums[j + 2] > target)
                     break;
                 int sum = target - nums[i] - nums[j];
