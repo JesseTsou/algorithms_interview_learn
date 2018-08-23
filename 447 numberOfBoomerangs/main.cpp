@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
-#include <map>
+#include <algorithm>
 #include <cmath>
 using namespace std;
 /*
@@ -45,6 +45,39 @@ public:
 
         return count;
     }
+    /*
+     * 时间复杂度：O(n^2)
+     * 保存所有距离，并作排序
+     * 若距离连续都相等，则为所要找的匹配次数，计算总数
+     */
+    int numberOfBoomerangs2(vector<pair<int, int>>& points) {
+        int res = 0;
+        vector<double> dis(points.size(),0);
+        for (int i = 0; i < points.size(); i ++)
+        {
+            //取出本轮所有距离的值
+            for (int j = 0;j < points.size(); j ++)
+            {
+                dis[j] = pow(points[j].first - points[i].first,2)+pow(points[j].second - points[i].second,2);
+            }
+            //对距离作排序
+            sort(dis.begin(),dis.end());
+            int matchcount = 1;
+            for (int j = 1;j < points.size(); j ++)
+            {
+                if (dis[j] == dis[j - 1]){//距离相等
+                    matchcount += 1;
+                }else{//距离不相等时，对相等距离计算总数
+                    res += matchcount * (matchcount - 1);
+                    matchcount = 1;
+                }
+            }
+            //对于最后几个数据距离都相等的处理
+            res += matchcount * (matchcount - 1);
+        }
+
+        return res;
+    }
 };
 int main() {
     pair<int, int> pair1(0,0);
@@ -60,7 +93,7 @@ int main() {
     vec.push_back(pair4);
     vec.push_back(pair5);
     Solution s;
-    int ret = s.numberOfBoomerangs(vec);
+    int ret = s.numberOfBoomerangs2(vec);
     cout << ret << endl;
     return 0;
 }
