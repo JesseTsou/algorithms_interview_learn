@@ -57,7 +57,7 @@ public:
     }
     /*
      * 时间复杂度：O(n^2)
-     * 使用unordered_map保存化简后的dx/dy以及对应的次数
+     * 使用map保存化简后的dx/dy以及对应的次数
      * 相同的dx/dy即在同一个直线上
      * 注意：需要加上对相同点的处理
      *      最大公约数的计算
@@ -108,6 +108,14 @@ public:
     }
     //求最大公约数
     int getgcd(int a, int b){ return a == 0 ? b : getgcd(b % a, a); }
+
+    /*
+     *
+     */
+    int maxPoints3(vector<Point>& points) {
+        int res = 0;
+        return res;
+    }
 };
 int main() {
     Point p1(1,1);
