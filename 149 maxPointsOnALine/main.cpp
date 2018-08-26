@@ -24,10 +24,10 @@ public:
     int maxPoints(vector<Point>& points) {
         int res = 0;
         for (int i = 0; i < points.size(); i ++) {
-            int samenum = 0;
+            int samenum = 1;
             int sameynum = 0;
             unordered_map<double, int> map1;
-            for (int j = 0; j < points.size(); j++)
+            for (int j = i + 1; j < points.size(); j++)
             {
                 //对相同点的判断
                 if (points[i].y == points[j].y && points[i].x == points[j].x) {
@@ -65,9 +65,9 @@ public:
     int maxPoints2(vector<Point>& points) {
         int res = 0;
         for (int i = 0; i < points.size(); i ++) {
-            int samenum = 0;
+            int samenum = 1;//算上本身
             map<pair<int,int>, int> map1;
-            for (int j = 0; j < points.size(); j++)
+            for (int j =  i + 1; j < points.size(); j++)
             {
                 //对相同点的判断
                 if (points[i].y == points[j].y && points[i].x == points[j].x) {
