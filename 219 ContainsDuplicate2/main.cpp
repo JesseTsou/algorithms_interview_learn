@@ -40,8 +40,11 @@ public:
 
         for (unordered_map<int,vector<int>>::iterator iter = map1.begin(); iter != map1.end(); iter ++) {
             if (iter->second.size() >=2){
+                //对容器进行排序
                 sort(iter->second.begin(), iter->second.end());
+                //遍历容器
                 for (int i = 0; i < iter->second.size() - 1; i ++) {
+                    //若相邻的下标小于k，则满足条件
                     if (iter->second[i+1] - iter->second[i] <= k )
                         return true;
                 }
@@ -49,12 +52,31 @@ public:
         }
         return false;
     }
+
+    /*
+     * 时间复杂度：O(n)
+     * 使用unordered_map保存数组值，以及对应的下标（最后匹配的下标）
+     */
+    bool containsNearbyDuplicate3(vector<int>& nums, int k) {
+        unordered_map<int,int> map1;
+
+        for (int i = 0; i < nums.size(); i ++) {
+            auto temp = map1.find(nums[i]);
+            if (temp != map1.end()){
+                if (i - temp->second <= k)
+                    return true;
+            }
+            map1[nums[i]]=i;
+        }
+
+        return false;
+    }
 };
 int main(){
     int nums[] = {1,2,3,1,2,3};
     vector<int> vec(nums, nums + sizeof(nums)/sizeof(nums[0]));
     Solution s;
-    if (s.containsNearbyDuplicate2(vec, 2)){
+    if (s.containsNearbyDuplicate3(vec, 2)){
         cout << "is true" << endl;
     }else{
         cout << "is false" << endl;
