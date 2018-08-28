@@ -77,5 +77,6 @@ int main() {
     Solution s;
     ListNode * head2 = s.reverseList(head);
     printList(head2);
+    delList(head2);
     return 0;
 }
