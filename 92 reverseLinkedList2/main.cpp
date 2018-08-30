@@ -26,7 +26,7 @@ public:
 
         //创建虚拟头结点，其下一个结点为m位置结点
         ListNode *newhead = new ListNode(0);
-        if (m==1)
+        if (m == 1)
             newhead->next = pm_pre;
         else
             newhead->next = pm_pre->next;
@@ -45,19 +45,14 @@ public:
             cur = next;
         }
 
-        if (m != 1)
-        {
-            //将m前一个结点的next指向反转后的第一个结点(即n结点)
-            //将m结点的next指向原来n的下一个结点
-            if (pm_pre->next){
-                pm_pre->next = pre;
-                temp->next = cur;
-            }
-        }else{
+        //将m结点的next指向原来n的下一个结点
+        temp->next = cur;
+        if (m == 1) {
             //若m==1，即n结点即头结点
-            //将m结点的next指向原来n的下一个结点
             head = pre;
-            temp->next = cur;
+        }else{
+            //将m前一个结点的next指向反转后的第一个结点(即n结点)
+            pm_pre->next = pre;
         }
         delete newhead;
         return head;
