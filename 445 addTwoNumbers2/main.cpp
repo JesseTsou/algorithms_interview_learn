@@ -106,6 +106,11 @@ public:
         return cur3;
     }
 
+    /*
+     * to do:
+     * 使用栈来解决该问题
+     */
+
 private:
     ListNode *revertList(ListNode* head)
     {
