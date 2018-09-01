@@ -50,6 +50,37 @@ public:
         }
         return dummy->next;
     }
+    /*
+     * 时间复杂度：O(n)
+     * 添加两个链表
+     * 小于x的记录到一个链表
+     * 其他大于等于的记录到另一外链表
+     * 然后两个链表拼接
+     * 注意:最后一个结点需要指向NULL
+     */
+    ListNode* partition2(ListNode* head, int x) {
+        ListNode *lessNode = new ListNode(0);
+        ListNode *moreNode = new ListNode(0);
+
+        ListNode *lessCur = lessNode;
+        ListNode *moreCur = moreNode;
+
+        ListNode *cur = head;
+        while(cur){
+            if (cur->val < x){
+                lessCur->next = cur;
+                lessCur = lessCur->next;
+            }else{
+                moreCur->next = cur;
+                moreCur = moreCur->next;
+            }
+            cur = cur->next;
+        }
+
+        lessCur->next = moreNode->next;
+        moreCur->next = NULL;
+        return lessNode->next;
+    }
 };
 
 ListNode* createList(int arr[], int n)
@@ -99,7 +130,7 @@ int main() {
     ListNode *head = createList(arr,n);
     printList(head);
     Solution s;
-    ListNode * head2 = s.partition(head,3);
+    ListNode * head2 = s.partition2(head,3);
     printList(head2);
     delList(head2);
     return 0;
