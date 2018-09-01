@@ -42,6 +42,31 @@ public:
         }
         return head;
     }
+
+    /*
+     * 时间复杂度：O(n)
+     * 用两个指针分别指向第一个结点first与第二个结点second，即第一个奇数结点与第一个偶数结点
+     * first指向second的下一个结点，即第二个奇数结点，这样就将两个奇数结点串起来了，再将first向后移动一位
+     * 同理second也指向第二个偶数结点，再将second后移
+     * 如此循环，直到链表结束
+     * 最后将最后一个奇数结点指向第一个偶数结点，将奇偶串起来，即完成链表重组。
+     */
+    ListNode* oddEvenList2(ListNode* head) {
+        if (head == NULL)
+            return NULL;
+        ListNode *first = head;
+        ListNode *second = head->next;
+        ListNode *temp = second;
+
+        while(second && second->next){
+            first->next = second->next;
+            first = first->next;
+            second->next = first->next;
+            second = second->next;
+        }
+        first->next = temp;
+        return head;
+    }
 };
 
 ListNode* createList(int arr[], int n)
@@ -91,7 +116,7 @@ int main() {
     ListNode *head = createList(arr,n);
     printList(head);
     Solution s;
-    ListNode * head2 = s.oddEvenList(head);
+    ListNode * head2 = s.oddEvenList2(head);
     printList(head2);
     delList(head2);
     return 0;
