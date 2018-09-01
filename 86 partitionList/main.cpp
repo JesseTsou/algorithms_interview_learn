@@ -25,13 +25,11 @@ public:
         if (head == NULL)
             return NULL;
         ListNode *dummy = new ListNode(0);
-
         dummy->next = head;
 
         ListNode *pre = dummy;
         ListNode *less = dummy;
         ListNode *cur = NULL;
-        ListNode *less_next = NULL;
         ListNode *cur_next = NULL;
 
         while(pre->next){
@@ -42,12 +40,11 @@ public:
                     pre = pre->next;
                     continue;
                 }
-                less_next = less->next;
-                cur_next = cur->next;
-                cur->next = less_next;
-                less->next = cur;
-                pre->next = cur_next;
-                less = less->next;
+                cur_next = cur->next;//记录当前点下一个结点
+                cur->next = less->next;//当前点指向less的下一个结点
+                less->next = cur;//less指向当前点，即完成插入操作
+                pre->next = cur_next;//前一点指向所记录的原当前点下一个结点，保持链表完整性
+                less = less->next;//less后移，pre不需要后移，因为其next已经变化了
             } else
                 pre = pre->next;
         }
