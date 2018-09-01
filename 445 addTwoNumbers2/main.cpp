@@ -80,8 +80,8 @@ public:
             units = sum % 10;
             tens = sum / 10;
             ListNode *temp = new ListNode(units);
-            temp->next = cur3;
-            cur3 = temp;
+            temp->next = cur3;//新结点指向结果链表头
+            cur3 = temp;//结果链表头修改为新结点
             cur1 = cur1->next;
             cur2 = cur2->next;
         }
