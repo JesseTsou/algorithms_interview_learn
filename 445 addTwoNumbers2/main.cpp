@@ -15,7 +15,7 @@ class Solution {
 public:
     /*
      * 时间复杂度：O(n)
-     * 将两个链表进行反转，然后同2 add two number相同操作，最后再将结果进行反转
+     * 将两个链表进行反转，然后同2 add two number相同操作，最后再将结果进行反转:
      * 添加新链表存储和的结果
      * 每次相加，需要将两个链表对位数值与前一次的十位数 相加
      * 将和的个位数添加至新链表中
@@ -61,6 +61,49 @@ public:
         }
 
         return revertList(l3->next);
+    }
+
+    /*
+     * 在以上基础上
+     * 结果链表可以不用反转：每次将新添加的结点放置到结果链表头部
+     */
+    ListNode* addTwoNumbers2(ListNode* l1, ListNode* l2) {
+        ListNode *cur1 = revertList(l1);
+        ListNode *cur2 = revertList(l2);
+        ListNode *cur3 = NULL;
+        int tens  = 0;//和的十位数
+        int units = 0;//和的个位数
+        int sum = 0;//和的数值
+
+        while(cur1 && cur2){
+            sum = cur1->val + cur2->val + tens;
+            units = sum % 10;
+            tens = sum / 10;
+            ListNode *temp = new ListNode(units);
+            temp->next = cur3;
+            cur3 = temp;
+            cur1 = cur1->next;
+            cur2 = cur2->next;
+        }
+
+        ListNode *last = (cur1 == NULL)?cur2:cur1;//取非空
+        while(last){
+            sum = last->val + tens;
+            units = sum % 10;
+            tens = sum / 10;
+            ListNode *temp = new ListNode(units);
+            temp->next = cur3;
+            cur3 = temp;
+            last = last->next;
+        }
+
+        if (tens){
+            ListNode *temp = new ListNode(tens);
+            temp->next = cur3;
+            cur3 = temp;
+        }
+
+        return cur3;
     }
 
 private:
@@ -129,7 +172,7 @@ int main() {
     printList(head1);
     printList(head2);
     Solution s;
-    ListNode * head3 = s.addTwoNumbers(head1,head2);
+    ListNode * head3 = s.addTwoNumbers2(head1,head2);
     printList(head3);
     delList(head1);
     return 0;
