@@ -25,7 +25,7 @@ public:
         ListNode *next = NULL;
         while (pre->next){
             cur = pre->next;
-            if (cur->next){
+            if (cur->next){//两结点交换
                 next = cur->next;
                 pre->next = next;
                 cur->next = next->next;
