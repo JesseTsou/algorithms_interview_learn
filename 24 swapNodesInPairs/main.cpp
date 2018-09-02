@@ -30,7 +30,7 @@ public:
                 pre->next = next;
                 cur->next = next->next;
                 next->next = cur;
-                pre = pre->next->next;
+                pre = pre->next->next;//向后移动两位
             } else
                 break;
         }
