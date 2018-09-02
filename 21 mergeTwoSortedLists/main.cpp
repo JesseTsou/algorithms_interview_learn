@@ -36,13 +36,7 @@ public:
         }
 
         ListNode *last = (cur1 != NULL)?cur1:cur2;
-        while(last){
-            pre->next = last;
-            last = last->next;
-            pre = pre->next;
-        }
-
-        pre->next = NULL;
+        pre->next = last;
 
         return dummy->next;
     }
