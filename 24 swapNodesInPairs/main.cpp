@@ -31,7 +31,7 @@ public:
                 cur->next = next->next;
                 next->next = cur;
                 pre = pre->next->next;//向后移动两位
-            } else
+            } else//说明结束了
                 break;
         }
         return dummy->next;
