@@ -29,7 +29,7 @@ public:
         ListNode *cur = NULL;    //遍历整个结点
         ListNode *cur_in = NULL; //[n,n+k]区间操作时的当前结点
         ListNode *next = NULL;   //[n,n+k]区间操作时的下一结点
-        ListNode *tmp = NULL;
+        ListNode *first = NULL;  //记录n这个结点
         int count = 0;
 
         cur = pre->next;
@@ -38,18 +38,18 @@ public:
             if (count == k){
                 pre_in = pre;
                 cur_in = pre->next;
-                tmp = cur_in;
+                first = cur_in;
                 for (int i = 0; i < k; i ++){
                     next = cur_in->next;
                     cur_in->next = pre_in;
                     pre_in = cur_in;
                     cur_in = next;
                 }
-                pre->next = pre_in;
-                tmp->next = next;
-                pre = tmp;
+                pre->next = pre_in;  //pre指向n+k这个结点
+                first->next = next;  //n这个结点需要指向n+k+1这个结点
+                pre = first;         //移动pre结点到n结点，是为下一个k长度区间的前一个结点
                 cur = pre->next;
-                count = 0;
+                count = 0;           //重新计数
                 continue;
             }
             cur = cur->next;
