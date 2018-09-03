@@ -16,7 +16,7 @@ class Solution {
 public:
     /*
      * 时间复杂度：O(n)
-     * 首先遍历链表，记录结点个数，当满足个数等于k时，开始进行反转
+     * 首先遍历链表，记录结点个数，当满足个数等于k时，开始进行反转，反转完成后，个数重新计数
      * 使用pre指向[n,n+k]区间的前一个结点（即n-1），使用cur进行遍历，满足条件时，cur指向n+k这个结点
      * [n,n+k]这个区间进行反转操作后，需要将pre指向n+k这个结点，并且n这个结点需要指向n+k+1这个结点
      * 这个是为了使[n,n+k]这个区间的结点能够与两边串联起来
@@ -39,7 +39,7 @@ public:
                 pre_in = pre;
                 cur_in = pre->next;
                 first = cur_in;
-                for (int i = 0; i < k; i ++){
+                for (int i = 0; i < k; i ++){//反转操作
                     next = cur_in->next;
                     cur_in->next = pre_in;
                     pre_in = cur_in;
