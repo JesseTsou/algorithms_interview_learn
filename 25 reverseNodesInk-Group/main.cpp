@@ -20,6 +20,8 @@ public:
      * 使用pre指向[n,n+k]区间的前一个结点（即n-1），使用cur进行遍历，满足条件时，cur指向n+k这个结点
      * [n,n+k]这个区间进行反转操作后，需要将pre指向n+k这个结点，并且n这个结点需要指向n+k+1这个结点
      * 这个是为了使[n,n+k]这个区间的结点能够与两边串联起来
+     * 反转方法：
+     * 将后一个结点指向前一个结点
      */
     ListNode* reverseKGroup(ListNode* head, int k) {
         ListNode *dummy = new ListNode(0);
@@ -53,6 +55,40 @@ public:
                 continue;
             }
             cur = cur->next;
+        }
+        return dummy->next;
+    }
+
+    /*
+     * 时间复杂度：O(n)
+     * 两次遍历，第一次得到链表长度
+     * 第二次遍历每次进行k的反转
+     * 反转的方法：
+     * 假设[n,n+i]这个区间进行反转，每次将i指向i-1，n-1指向i，n指向n+1，而其他点不需要变动
+     */
+    ListNode* reverseKGroup2(ListNode* head, int k) {
+        ListNode *dummy = new ListNode(0);
+        dummy->next = head;
+        ListNode *pre = dummy;
+        ListNode *cur = pre->next;
+        ListNode *next = NULL;
+        int num = 0;
+
+        while(cur){
+            cur = cur->next;
+            num ++;
+        }
+        while(num >= k){
+            cur = pre->next;
+            next = cur->next;
+            for (int i = 1; i < k; i ++){
+                cur->next = next->next;
+                next->next = pre->next;
+                pre->next = next;
+                next = cur->next;
+            }
+            num -= k;
+            pre = cur;
         }
         return dummy->next;
     }
@@ -103,7 +139,7 @@ int main() {
     ListNode *head1 = createList(arr1,sizeof(arr1)/sizeof(arr1[0]));
     printList(head1);
     Solution s;
-    ListNode * head3 = s.reverseKGroup(head1,1);
+    ListNode * head3 = s.reverseKGroup2(head1,4);
     printList(head3);
     delList(head1);
     return 0;
