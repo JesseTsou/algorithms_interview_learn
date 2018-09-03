@@ -14,14 +14,47 @@ struct ListNode {
 
 class Solution {
 public:
+    /*
+     * 时间复杂度：O(n)
+     * 首先遍历链表，记录结点个数，当满足个数等于k时，开始进行反转
+     * 使用pre指向[n,n+k]区间的前一个结点（即n-1），使用cur进行遍历，满足条件时，cur指向n+k这个结点
+     * [n,n+k]这个区间进行反转操作后，需要将pre指向n+k这个结点，并且n这个结点需要指向n+k+1这个结点
+     * 这个是为了使[n,n+k]这个区间的结点能够与两边串联起来
+     */
     ListNode* reverseKGroup(ListNode* head, int k) {
         ListNode *dummy = new ListNode(0);
         dummy->next = head;
         ListNode *pre = dummy;
-        ListNode *cur = NULL;
-        ListNode *next = NULL;
+        ListNode *pre_in = NULL; //[n,n+k]区间操作时的前结点
+        ListNode *cur = NULL;    //遍历整个结点
+        ListNode *cur_in = NULL; //[n,n+k]区间操作时的当前结点
+        ListNode *next = NULL;   //[n,n+k]区间操作时的下一结点
+        ListNode *tmp = NULL;
+        int count = 0;
 
-        return NULL;
+        cur = pre->next;
+        while(cur){
+            count ++;
+            if (count == k){
+                pre_in = pre;
+                cur_in = pre->next;
+                tmp = cur_in;
+                for (int i = 0; i < k; i ++){
+                    next = cur_in->next;
+                    cur_in->next = pre_in;
+                    pre_in = cur_in;
+                    cur_in = next;
+                }
+                pre->next = pre_in;
+                tmp->next = next;
+                pre = tmp;
+                cur = pre->next;
+                count = 0;
+                continue;
+            }
+            cur = cur->next;
+        }
+        return dummy->next;
     }
 };
 
@@ -70,7 +103,7 @@ int main() {
     ListNode *head1 = createList(arr1,sizeof(arr1)/sizeof(arr1[0]));
     printList(head1);
     Solution s;
-    ListNode * head3 = s.reverseKGroup(head1,2);
+    ListNode * head3 = s.reverseKGroup(head1,1);
     printList(head3);
     delList(head1);
     return 0;
