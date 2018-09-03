@@ -64,7 +64,7 @@ public:
      * 两次遍历，第一次得到链表长度
      * 第二次遍历每次进行k的反转
      * 反转的方法：
-     * 假设[n,n+i]这个区间进行反转，每次将i指向i-1，n-1指向i，n指向n+1，而其他点不需要变动
+     * 假设[n,n+k]这个区间进行反转，对第i（n<=i<=n+k）个进行反转时每次将n+i指向i-1，n-1指向i，n指向i+1，而其他点不需要变动
      */
     ListNode* reverseKGroup2(ListNode* head, int k) {
         ListNode *dummy = new ListNode(0);
