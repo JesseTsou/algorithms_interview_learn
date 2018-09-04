@@ -30,6 +30,7 @@ public:
             cur = pre->next;
             tmp = dummy;
             flag = 0;
+            //从dummy->next开始遍历直到cur，找到第一个大于cur的结点
             while(tmp->next != cur){
                 if (tmp->next->val > cur->val){
                     next = tmp->next;
@@ -41,6 +42,7 @@ public:
                 }
                 tmp = tmp->next;
             }
+            //没有找到，则直到后移一位
             if (!flag){
                 pre = pre->next;
             }
