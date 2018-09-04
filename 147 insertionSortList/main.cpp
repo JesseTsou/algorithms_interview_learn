@@ -13,7 +13,7 @@ struct ListNode {
 class Solution {
 public:
     /*
-     * 时间复杂度：n(n^2)
+     * 时间复杂度：O(n^2)
      * 遍历链表，每个结点i都与前面的结点进行比较，若大于i结点，则将i结点插入到该点前面
      */
     ListNode* insertionSortList(ListNode* head) {
