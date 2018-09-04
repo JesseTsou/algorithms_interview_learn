@@ -39,7 +39,7 @@ public:
 
         ListNode *l1 = head1;
         ListNode *l2 = head2;
-
+        /*
         while(l1 || l2 ){
             if (l1 && (l2 == NULL || l1->val < l2->val)){
                 l3->next = l1;
@@ -50,7 +50,20 @@ public:
             }
             l3 = l3->next;
         }
-        l3->next = NULL;
+        */
+        while(l1 && l2 ){
+            if (l1->val < l2->val){
+                l3->next = l1;
+                l1 = l1->next;
+            } else if (l1->val >= l2->val){
+                l3->next = l2;
+                l2 = l2->next;
+            }
+            l3 = l3->next;
+        }
+        ListNode *last = (l1 == NULL)?l2:l1;
+        l3->next = last;
+
         ListNode *ret = dummy->next;
         delete dummy;
         return ret;
