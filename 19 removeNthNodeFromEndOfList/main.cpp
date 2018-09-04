@@ -42,6 +42,34 @@ public:
         }
         return dummy->next;
     }
+
+    /*
+     * 时间复杂度：O(n)
+     * 两遍循环，第一次得到链表长度，然后计算出倒数第n个结点是第几个结点
+     * 第二次循环得到结点位置，然后进行删除操作
+     */
+    ListNode* removeNthFromEnd2(ListNode* head, int n) {
+        ListNode *dummy = new ListNode(0);
+        dummy->next = head;
+        ListNode *cur = dummy->next;
+        ListNode *pre = dummy;
+        ListNode *del = NULL;
+        int count = 0;
+        while(cur){
+            count ++;
+            cur = cur->next;
+        }
+
+        for (int i = 0; i < count - n; i ++){
+            pre = pre->next;
+        }
+
+        del = pre->next;
+        pre->next = del->next;
+        delete del;
+
+        return dummy->next;
+    }
 };
 
 ListNode* createList(int arr[], int n)
@@ -89,7 +117,7 @@ int main() {
     ListNode *head1 = createList(arr1,sizeof(arr1)/sizeof(arr1[0]));
     printList(head1);
     Solution s;
-    ListNode *head3 = s.removeNthFromEnd(head1,4);
+    ListNode *head3 = s.removeNthFromEnd2(head1,4);
     printList(head3);
     delList(head1);
     return 0;
