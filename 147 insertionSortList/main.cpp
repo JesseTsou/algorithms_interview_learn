@@ -12,10 +12,43 @@ struct ListNode {
 
 class Solution {
 public:
+    /*
+     * 时间复杂度：n(n^2)
+     * 遍历链表，每个结点i都与前面的结点进行比较，若大于i结点，则将i结点插入到该点前面
+     */
     ListNode* insertionSortList(ListNode* head) {
+        ListNode *dummy = new ListNode(0);
+        dummy->next = head;
 
+        ListNode *pre = dummy;
+        ListNode *cur = NULL;
+        ListNode *next = NULL;
+        ListNode *tmp = NULL;
+        int flag = 0;
+
+        while(pre->next){
+            cur = pre->next;
+            tmp = dummy;
+            flag = 0;
+            while(tmp->next != cur){
+                if (tmp->next->val > cur->val){
+                    next = tmp->next;
+                    tmp->next = cur;
+                    pre->next = cur->next;
+                    cur->next = next;
+                    flag = 1;
+                    break;
+                }
+                tmp = tmp->next;
+            }
+            if (!flag){
+                pre = pre->next;
+            }
+        }
+        return dummy->next;
     }
 };
+
 ListNode* createList(int arr[], int n)
 {
     if (n == 0)
@@ -57,7 +90,8 @@ int delList(ListNode *head)
 }
 
 int main() {
-    int arr1[] = {4,2,1,3};
+    //int arr1[] = {4,2,1,3};
+    int arr1[] = {-1,5,3,4,0};
     ListNode *head1 = createList(arr1,sizeof(arr1)/sizeof(arr1[0]));
     printList(head1);
     Solution s;
