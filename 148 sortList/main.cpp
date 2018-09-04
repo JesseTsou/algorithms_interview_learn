@@ -13,7 +13,7 @@ class Solution {
 public:
     /*
      * 时间复杂度：O(nlogn)
-     * 归并排序
+     * 归并排序的递归实现
      */
     ListNode* sortList(ListNode* head) {
         if (head == NULL || head->next == NULL)
