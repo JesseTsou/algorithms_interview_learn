@@ -11,8 +11,40 @@ struct ListNode {
 };
 class Solution {
 public:
+    /*
+     * 时间复杂度：O(n)
+     * 得到链表长度，k对其取余（对链表进行旋转次数是长度的整数倍数时，链表是不变的），求得的k值即有效的旋转次数
+     * 每次旋转，将最后一个结点移到第一个结点位置
+     * 所以每次都需要定位到最后一个结点前一个结点的位置，方便进行移动操作
+     */
     ListNode* rotateRight(ListNode* head, int k) {
+        ListNode *dummy = new ListNode(0);
+        dummy->next = head;
 
+        ListNode *pre = dummy->next;
+        ListNode *cur = NULL;
+
+        if (pre == NULL || pre->next == NULL)
+            return head;
+
+        int len = 1;
+        while(pre->next){
+            pre=pre->next;
+            len ++;
+        }
+
+        k = k % len;
+
+        for (int i = 0; i < k; i ++){
+            pre = dummy->next;
+            while(pre->next->next)
+                pre = pre->next;
+            cur = pre->next;
+            pre->next = cur->next;
+            cur->next = dummy->next;
+            dummy->next = cur;
+        }
+        return dummy->next;
     }
 };
 
@@ -61,7 +93,7 @@ int main() {
     ListNode *head1 = createList(arr1,sizeof(arr1)/sizeof(arr1[0]));
     printList(head1);
     Solution s;
-    ListNode *head3 = s.rotateRight(head1,2);
+    ListNode *head3 = s.rotateRight(head1,3);
     printList(head3);
     delList(head1);
     return 0;
