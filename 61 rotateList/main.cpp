@@ -46,6 +46,45 @@ public:
         }
         return dummy->next;
     }
+
+    ListNode* rotateRight2(ListNode* head, int k) {
+        ListNode *dummy = new ListNode(0);
+        dummy->next = head;
+
+        ListNode *pre = dummy->next;
+        ListNode *cur = NULL;
+        ListNode *next = NULL;
+
+        if (pre == NULL)
+            return head;
+
+        int len = 1;
+        while(pre->next){
+            pre=pre->next;
+            len ++;
+        }
+
+        k = k % len;
+        ListNode *start = dummy->next;
+        ListNode *end =  dummy->next;
+
+
+        for (int i = 0; i < k; i ++){
+            end = end->next;
+        }
+
+        while(end->next){
+            start = start->next;
+            end = end->next;
+        }
+
+        next = dummy->next;
+        dummy->next = start->next;
+        end->next = next;
+        start->next = NULL;
+
+        return dummy->next;
+    }
 };
 
 ListNode* createList(int arr[], int n)
@@ -93,7 +132,7 @@ int main() {
     ListNode *head1 = createList(arr1,sizeof(arr1)/sizeof(arr1[0]));
     printList(head1);
     Solution s;
-    ListNode *head3 = s.rotateRight(head1,3);
+    ListNode *head3 = s.rotateRight2(head1,3);
     printList(head3);
     delList(head1);
     return 0;
