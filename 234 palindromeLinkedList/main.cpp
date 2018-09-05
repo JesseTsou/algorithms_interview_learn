@@ -23,6 +23,7 @@ public:
         ListNode *slow = head;
         ListNode *fast = head;
 
+        //使用快慢指针得到中间结点
         while(fast->next && fast->next->next){
             fast = fast->next->next;
             slow = slow->next;
@@ -31,8 +32,10 @@ public:
         ListNode *mid = slow;
         ListNode *pre = NULL;
         ListNode *last = mid->next;
+        //正向链表尾部指向NULL
         mid->next = NULL;
 
+        //反转mid之后的链表，尾部指向NULL
         ListNode *tmp = NULL;
         while(last){
             tmp = last->next;
@@ -43,6 +46,7 @@ public:
 
         bool ispalindrome = true;
 
+        //同时遍历正向与反向链表，并进行比较
         while(head && pre){
             if (head->val != pre->val){
                 ispalindrome = false;
