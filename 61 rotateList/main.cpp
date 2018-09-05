@@ -47,6 +47,10 @@ public:
         return dummy->next;
     }
 
+	/*
+	 * 时间复杂度：O(n)
+	 * 使用双指针，获取到需要旋转的区间，然后整体旋转到头部
+	 */
     ListNode* rotateRight2(ListNode* head, int k) {
         ListNode *dummy = new ListNode(0);
         dummy->next = head;
@@ -55,7 +59,7 @@ public:
         ListNode *cur = NULL;
         ListNode *next = NULL;
 
-        if (pre == NULL)
+        if (pre == NULL || pre->next == NULL)
             return head;
 
         int len = 1;
@@ -65,9 +69,10 @@ public:
         }
 
         k = k % len;
+		if (k == 0)
+			return head;
         ListNode *start = dummy->next;
         ListNode *end =  dummy->next;
-
 
         for (int i = 0; i < k; i ++){
             end = end->next;
@@ -128,11 +133,12 @@ int delList(ListNode *head)
 }
 
 int main() {
-    int arr1[] = {1,2,3,4,5};
+    //int arr1[] = {1,2,3,4,5};
+    int arr1[] = {1,2};
     ListNode *head1 = createList(arr1,sizeof(arr1)/sizeof(arr1[0]));
     printList(head1);
     Solution s;
-    ListNode *head3 = s.rotateRight2(head1,3);
+    ListNode *head3 = s.rotateRight2(head1,2);
     printList(head3);
     delList(head1);
     return 0;
