@@ -15,7 +15,7 @@ public:
     int evalRPN(vector<string>& tokens) {
         if (tokens.empty())
             return 0;
-        stack<string> stack1;
+        stack<int> stack1;
         int num1 = 0;
         int num2 = 0;
         int res = 0;
@@ -23,9 +23,9 @@ public:
             if (e == "+" || e == "-" || e == "*" || e == "/" ){
                 if (stack1.size() < 2)
                     continue;
-                num2 = stoi(stack1.top());
+                num2 = stack1.top();
                 stack1.pop();
-                num1 = stoi(stack1.top());
+                num1 = stack1.top();
                 stack1.pop();
                 if (e == "+")
                     res = num1 + num2;
@@ -35,12 +35,12 @@ public:
                     res = num1 * num2;
                 if (e == "/")
                     res = num1 / num2;
-                stack1.push(to_string(res));
+                stack1.push(res);
             } else{
-                stack1.push(e);
+                stack1.push(stoi(e));
             }
         }
-        return stoi(stack1.top());
+        return stack1.top();
     }
 };
 
