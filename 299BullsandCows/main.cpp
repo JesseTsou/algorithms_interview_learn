@@ -40,6 +40,29 @@ public:
         }
         return to_string(A) + "A" + to_string(B) + "B";
     }
+    /*
+     * 当同位置元素相同时，A++
+     * 当同位置元素不同时，用一个map保存两个数字,secret中出现过的加一，guess中出现的减一，则下次判断同一个map中的值的大小，可知之前对方中是否出现过
+    */
+    string getHint2(string secret, string guess) {
+        int map[10] = {0};
+        int A = 0, B = 0;
+        int s = 0, g = 0;
+        for (int i = 0; i < guess.size(); i ++){
+            s = secret[i] - '0';
+            g = guess[i] - '0';
+            if (s == g){
+                A ++;
+            }else{
+                if (map[s] < 0) B ++;//小于0时，说明之前guess出现过，则B++
+                if (map[g] > 0) B ++;//大于0时，说明之前secret出现过，则B++
+                map[s] ++;
+                map[g] --;
+            }
+        }
+
+        return to_string(A) + "A" + to_string(B) + "B";
+    }
 };
 
 int main() {
